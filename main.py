@@ -2,7 +2,9 @@ from praw import Reddit
 from pathlib import Path
 from credentials import *
 import tweepy
+import requests
 
+base_url = 'https://reddit.com'
 reddit = Reddit('AwwBot')
 subreddit = reddit.subreddit('aww')
 
@@ -32,8 +34,27 @@ for submission in submissions:
     if submission.id + '\n' in data:
         continue
 
-    # TODO: tweet submission.url/submission.permalink
-    api.update_status(submission.url)
+    try:
+        request = requests.get(submission.url, stream=True)
+        if request.status_code == 200:
+            status = base_url + submission.permalink
+            print('Processing:', status)
+
+            file = Path('temp.jpg')
+            if Path(submission.url).suffix in ['.jpeg', '.jpg', '.png']:
+                with open(str(file), 'wb') as image:
+                    for chunk in request:
+                        image.write(chunk)
+
+                media = api.media_upload(str(file))
+                api.update_status(status=status, media_ids=[media.media_id])
+                file.unlink()
+            else:
+                api.update_status(status)
+        else:
+            continue
+    except:
+        continue
 
     if len(data) < max_history:
         data.append(submission.id + '\n')
