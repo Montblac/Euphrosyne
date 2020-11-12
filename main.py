@@ -1,15 +1,29 @@
-from praw import Reddit
+import os
 from pathlib import Path
-from credentials import *
-import tweepy
+
+import praw
 import requests
+import tweepy
 
-base_url = 'https://reddit.com'
-reddit = Reddit('AwwBot')
+# initialize api keys from environment variables
+REDDIT_CLIENT_ID = os.getenv('REDDIT_CLIENT_ID')
+REDDIT_CLIENT_SECRET        = os.getenv('REDDIT_CLIENT_SECRET')
+TWITTER_CONSUMER_KEY        = os.getenv('TWITTER_CONSUMER_KEY')
+TWITTER_CONSUMER_SECRET     = os.getenv('TWITTER_CONSUMER_SECRET')
+TWITTER_ACCESS_TOKEN        = os.getenv('TWITTER_ACCESS_TOKEN')
+TWITTER_ACCESS_TOKEN_SECRET = os.getenv('TWITTER_ACCESS_TOKEN_SECRET')
+TWITTER_BEARER_TOKEN        = os.getenv('TWITTER_BEARER_TOKEN')
+
+# reddit authentication
+reddit = praw.Reddit(client_id=REDDIT_CLIENT_ID,
+                     client_secret=REDDIT_CLIENT_SECRET,
+                     user_agent="AwwBot by Montblac")
 subreddit = reddit.subreddit('aww')
+base_url = 'https://reddit.com'
 
-auth = tweepy.OAuthHandler(API_KEY, API_SECRET_KEY)
-auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+# twitter authentication
+auth = tweepy.OAuthHandler(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
+auth.set_access_token(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
 # create a text file to store recently tweeted submissions
