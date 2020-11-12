@@ -140,3 +140,4 @@ cython_debug/
 # Project Specific
 praw.ini
 history.txt
+credentials.py
