@@ -141,3 +141,4 @@ cython_debug/
 praw.ini
 history.txt
 credentials.py
+.DS_Store
