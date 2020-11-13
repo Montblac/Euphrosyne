@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 import praw
+
 from tweet import Tweet
 
 # initialize api keys from environment variables
@@ -42,6 +43,7 @@ for submission in submissions:
         tweet.post()
 
     except SystemExit:
+        print()
         continue
 
     if len(data) < max_history:
