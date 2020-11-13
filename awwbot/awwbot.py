@@ -18,7 +18,7 @@ base_url = 'https://reddit.com'
 
 # create a text file to store recently tweeted submissions
 # use header for index of last submission entry modified
-history = Path('history.txt')
+history = Path.cwd() / 'history.txt'
 max_history = 168
 if not history.exists():
     with open(history, 'w') as f:
