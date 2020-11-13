@@ -139,5 +139,5 @@ cython_debug/
 
 # Project Specific
 praw.ini
-awwbot/history.txt
+history.txt
 .DS_Store
