@@ -2,17 +2,11 @@ import os
 from pathlib import Path
 
 import praw
-import requests
-import tweepy
+from tweet import Tweet
 
 # initialize api keys from environment variables
 REDDIT_CLIENT_ID = os.getenv('REDDIT_CLIENT_ID')
-REDDIT_CLIENT_SECRET        = os.getenv('REDDIT_CLIENT_SECRET')
-TWITTER_CONSUMER_KEY        = os.getenv('TWITTER_CONSUMER_KEY')
-TWITTER_CONSUMER_SECRET     = os.getenv('TWITTER_CONSUMER_SECRET')
-TWITTER_ACCESS_TOKEN        = os.getenv('TWITTER_ACCESS_TOKEN')
-TWITTER_ACCESS_TOKEN_SECRET = os.getenv('TWITTER_ACCESS_TOKEN_SECRET')
-TWITTER_BEARER_TOKEN        = os.getenv('TWITTER_BEARER_TOKEN')
+REDDIT_CLIENT_SECRET = os.getenv('REDDIT_CLIENT_SECRET')
 
 # reddit authentication
 reddit = praw.Reddit(client_id=REDDIT_CLIENT_ID,
@@ -20,11 +14,6 @@ reddit = praw.Reddit(client_id=REDDIT_CLIENT_ID,
                      user_agent="AwwBot by Montblac")
 subreddit = reddit.subreddit('aww')
 base_url = 'https://reddit.com'
-
-# twitter authentication
-auth = tweepy.OAuthHandler(TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET)
-auth.set_access_token(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
-api = tweepy.API(auth)
 
 # create a text file to store recently tweeted submissions
 # use header for index of last submission entry modified
@@ -49,25 +38,10 @@ for submission in submissions:
         continue
 
     try:
-        request = requests.get(submission.url, stream=True)
-        if request.status_code == 200:
-            status = base_url + submission.permalink
-            print('Processing:', status)
+        tweet = Tweet(base_url + submission.permalink, submission.url, submission.permalink)
+        tweet.post()
 
-            file = Path('temp.jpg')
-            if Path(submission.url).suffix in ['.jpeg', '.jpg', '.png']:
-                with open(str(file), 'wb') as image:
-                    for chunk in request:
-                        image.write(chunk)
-
-                media = api.media_upload(str(file))
-                api.update_status(status=status, media_ids=[media.media_id])
-                file.unlink()
-            else:
-                api.update_status(status)
-        else:
-            continue
-    except:
+    except SystemExit:
         continue
 
     if len(data) < max_history:
