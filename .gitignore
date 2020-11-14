@@ -138,6 +138,6 @@ dmypy.json
 cython_debug/
 
 # Project Specific
-praw.ini
 history.txt
 .DS_Store
+.idea
