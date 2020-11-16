@@ -3,11 +3,9 @@ from pathlib import Path
 
 import praw
 
+from settings import REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET
 from tweet import Tweet
 
-# initialize api keys from environment variables
-REDDIT_CLIENT_ID = os.getenv('REDDIT_CLIENT_ID')
-REDDIT_CLIENT_SECRET = os.getenv('REDDIT_CLIENT_SECRET')
 
 # reddit authentication
 reddit = praw.Reddit(client_id=REDDIT_CLIENT_ID,
