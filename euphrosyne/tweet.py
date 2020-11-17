@@ -1,11 +1,11 @@
 import sys
 import time
-import requests
 from pathlib import Path
+
+import requests
 from requests_oauthlib import OAuth1
 
 from settings import TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET
-
 
 MEDIA_ENDPOINT_URL = 'https://upload.twitter.com/1.1/media/upload.json'
 POST_TWEET_URL = 'https://api.twitter.com/1.1/statuses/update.json'
@@ -146,16 +146,20 @@ class Tweet:
     def post(self):
         """ Publishes tweet """
         print('PROCESSING TWEET TO PUBLISH')
-        self.media_download()
-        self.upload_init()
-        self.upload_append()
-        self.upload_finalize()
-        self.temp_file.unlink()
+        try:
+            self.media_download()
+            self.upload_init()
+            self.upload_append()
+            self.upload_finalize()
+            self.temp_file.unlink()
 
-        request_data = {
-            'status': self.status,
-            'media_ids': self.media_id
-        }
+            request_data = {
+                'status': self.status,
+                'media_ids': self.media_id
+            }
 
-        requests.post(url=POST_TWEET_URL, data=request_data, auth=oauth)
-        print('TWEET POSTED!')
+            requests.post(url=POST_TWEET_URL, data=request_data, auth=oauth)
+            print('TWEET POSTED!')
+
+        except SystemExit:
+            self.post()

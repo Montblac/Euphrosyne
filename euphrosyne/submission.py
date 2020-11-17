@@ -1,6 +1,7 @@
 import sys
-import praw
 from pathlib import Path
+
+import praw
 
 from settings import REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET
 
