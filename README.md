@@ -7,12 +7,12 @@ at a given hour and tweets them.
 Prepare the Reddit account you will be using by going to *apps* in [*preferences*](https://www.reddit.com/prefs/apps)
 and clicking *create app*. 
 
-<img src="https://raw.githubusercontent.com/Montblac/Euphrosyne/main/img/reddit_example.png" align="center" width="300" />
+![reddit_example](https://raw.githubusercontent.com/Montblac/Euphrosyne/main/img/reddit_example.png)
 
 Choose the name of your app and a provide a brief description. 
 Fill in the rest of the fields according to the image below.
 
-<img src="https://raw.githubusercontent.com/Montblac/Euphrosyne/main/img/reddit_example2.png" align="center" width="300" />
+![reddit_example2](https://raw.githubusercontent.com/Montblac/Euphrosyne/main/img/reddit_example2.png)
 
 Save the keys that you get as you will be using them later.
 
