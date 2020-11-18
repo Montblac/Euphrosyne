@@ -1,6 +1,6 @@
 # Euphrosyne
 Euphrosyne is a Twitter bot that pulls hot posts from subreddits
-at a given hour and tweets them.
+every hour and tweets them.
 
 ## Installation
 #### Setting up your Reddit account
